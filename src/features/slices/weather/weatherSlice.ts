@@ -9,6 +9,9 @@ export interface WeatherData {
   condition: string;
   windSpeed: number;
   humidity: number;
+  icon: string; 
+  visibility: number;
+
 }
 
 // 2. Define the slice state

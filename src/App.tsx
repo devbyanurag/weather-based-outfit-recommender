@@ -1,8 +1,8 @@
 
 import { useEffect } from 'react';
 import Header from './components/Header'
-import WeatherCard from './components/WeatherCard'
-import { initializeDarkMode } from './features/thunk/darkMode';
+import WeatherCard from './components/WeatherCard/WeatherCard'
+import { initializeDarkMode } from './features/thunk/darkModeThunks';
 import { useAppDispatch } from './store/hooks';
 
 const App = () => {
@@ -11,6 +11,8 @@ const App = () => {
   useEffect(() => {
     dispatch(initializeDarkMode());
   }, [dispatch]);
+
+   
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">

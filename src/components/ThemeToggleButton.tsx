@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { toggleDarkModeWithSideEffects } from '../features/thunk/darkMode';
+import { toggleDarkModeWithSideEffects } from '../features/thunk/darkModeThunks';
 
 const ThemeToggleButton: React.FC = () => {
     const isDarkMode = useAppSelector((state) => state.darkMode.isDarkMode);
