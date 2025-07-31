@@ -1,19 +1,22 @@
 import React from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
-import { useDarkMode } from '../hooks/useDarkMode';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { toggleDarkModeWithSideEffects } from '../features/thunk/darkMode';
 
 const ThemeToggleButton: React.FC = () => {
-  const { isDark, toggleTheme } = useDarkMode();
+    const isDarkMode = useAppSelector((state) => state.darkMode.isDarkMode);
+    const dispatch = useAppDispatch();
 
-  return (
-    <button
-      onClick={toggleTheme}
-      className="p-2 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 transition"
-      aria-label="Toggle theme"
-    >
-      {isDark ? <FaSun size={22} /> : <FaMoon size={22} />}
-    </button>
-  );
+    return (
+        <button
+            onClick={() => {
+                dispatch(toggleDarkModeWithSideEffects());
+            }}
+            className="p-3 rounded-full transition-all duration-300 bg-white text-gray-600 hover:bg-gray-50 shadow-md dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700"
+        >
+            {isDarkMode ? <FaSun className="w-6 h-6" /> : <FaMoon className="w-6 h-6" />}
+        </button>
+    );
 };
 
 export default ThemeToggleButton;
