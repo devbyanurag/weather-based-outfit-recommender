@@ -2,6 +2,10 @@
 
 A modern weather dashboard built with React + TypeScript that displays current weather details for any city and provides outfit recommendations based on the temperature and weather condition.
 
+[Live Demo](https://weather-based-outfit-recommender.vercel.app)
+
+![Weather App Dark Mode](src/assets/weather_light.png)
+
 ## Features
 
 - Search for any city using OpenWeatherMap API
