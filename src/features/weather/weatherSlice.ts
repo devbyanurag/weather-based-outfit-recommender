@@ -1,38 +1,54 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../store'
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../../store';
 
-// Define a type for the slice state
-interface CounterState {
-  value: number
+// 1. Define the weather data type for your app
+export interface WeatherData {
+  city: string;
+  temperature: number;
+  condition: string;
+  windSpeed: number;
+  humidity: number;
 }
 
-// Define the initial state using that type
-const initialState: CounterState = {
-  value: 0,
+// 2. Define the slice state
+interface WeatherState {
+  currentWeather: WeatherData | null;
+  searchHistory: string[]; // last 5 cities
 }
 
-export const counterSlice = createSlice({
-  name: 'counter',
-  // `createSlice` will infer the state type from the `initialState` argument
+// 3. Initial state
+const initialState: WeatherState = {
+  currentWeather: null,
+  searchHistory: [],
+};
+
+// 4. Slice
+export const weatherSlice = createSlice({
+  name: 'weather',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
+    setCurrentWeather: (state, action: PayloadAction<WeatherData>) => {
+      state.currentWeather = action.payload;
     },
-    decrement: (state) => {
-      state.value -= 1
+    addToSearchHistory: (state, action: PayloadAction<string>) => {
+      state.searchHistory = [
+        action.payload,
+        ...state.searchHistory.filter(city => city.toLowerCase() !== action.payload.toLowerCase())
+      ].slice(0, 5);
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+    clearSearchHistory: (state) => {
+      state.searchHistory = [];
     },
   },
-})
+});
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+// 5. Actions
+export const { setCurrentWeather, addToSearchHistory, clearSearchHistory } = weatherSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.counter.value
+// 6. Selectors
+export const selectCurrentWeather = (state: RootState) => state.weather.currentWeather;
+export const selectSearchHistory = (state: RootState) => state.weather.searchHistory;
 
-export default counterSlice.reducer
+// 7. Reducer
+export default weatherSlice.reducer;
